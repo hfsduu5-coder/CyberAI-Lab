@@ -62,7 +62,7 @@ def run_chat():
 def add_report_args(p):
     p.add_argument("--ai",action="store_true")
     p.add_argument("--output")
-    p.add_argument("--format",choices=("json","md"),default="json")
+    p.add_argument("--format",choices=("json","md","html"),default="json")
 
 def build_parser():
     p=argparse.ArgumentParser(prog="cyberai",description="Extensible AI-assisted CLI for authorized cybersecurity research.")
