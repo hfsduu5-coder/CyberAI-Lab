@@ -1,0 +1,23 @@
+[build-system]
+requires = ["setuptools>=68"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "cyberai-lab"
+version = "0.4.0"
+description = "Extensible AI-assisted CLI for authorized cybersecurity research."
+readme = "README.md"
+requires-python = ">=3.10"
+license = {text = "MIT"}
+authors = [{name = "Muqtada"}]
+dependencies = [
+  "requests>=2.32.0,<3.0.0",
+  "python-dotenv>=1.0.1,<2.0.0"
+]
+keywords = ["cybersecurity", "ctf", "security-research", "ai", "cli"]
+
+[project.scripts]
+cyberai = "cyberai.cli:main"
+
+[tool.setuptools.packages.find]
+include = ["cyberai*"]
