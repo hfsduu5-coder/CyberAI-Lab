@@ -9,7 +9,7 @@ A Python CLI for **AI-assisted cybersecurity research** in authorized labs, CTFs
 > [!IMPORTANT]
 > Only analyze systems, code, logs, or targets you own or have explicit permission to test.
 
-## v0.2 Highlights
+## v0.3 Highlights
 
 - Interactive AI chat
 - OpenAI-compatible API support
@@ -22,6 +22,9 @@ A Python CLI for **AI-assisted cybersecurity research** in authorized labs, CTFs
 - Unit tests
 - GitHub Actions test matrix for Python 3.10–3.12
 - Dedicated security policy
+- Local CTF/lab workspaces
+- JSON and Markdown report export
+- Contribution guide
 - Secrets kept outside source code through environment configuration
 
 ## Project Structure
@@ -39,6 +42,7 @@ CyberAI-Lab/
 ├── .env.example
 ├── .gitignore
 ├── LICENSE
+├── CONTRIBUTING.md
 ├── SECURITY.md
 ├── requirements.txt
 └── README.md
@@ -152,6 +156,24 @@ python -m cyberai.cli config
 
 API keys are never printed.
 
+## Workspaces & Report Export
+
+Create an isolated local workspace for a lab or CTF:
+
+```bash
+python -m cyberai.cli workspace new demo-lab
+python -m cyberai.cli workspace status workspaces/demo-lab
+```
+
+Export offline parser results as JSON or Markdown:
+
+```bash
+python -m cyberai.cli http request.txt --output workspaces/demo-lab/reports/http.json --format json
+python -m cyberai.cli recon recon.txt --output workspaces/demo-lab/reports/recon.md --format md
+```
+
+Workspaces are local organization helpers; they do not contact or scan targets.
+
 ## Tests
 
 ```bash
@@ -172,7 +194,8 @@ GitHub Actions runs the test suite on Python 3.10, 3.11, and 3.12.
 
 - Structured defensive analysis templates
 - Additional safe local parsers
-- Report export
+- Plugin/module registry
+- Richer structured report templates
 - Provider adapters
 - Local context/knowledge support
 - Expanded tests and packaging
