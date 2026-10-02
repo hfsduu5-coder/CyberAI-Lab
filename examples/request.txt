@@ -1,0 +1,5 @@
+GET /account?view=profile HTTP/1.1
+Host: lab.example
+User-Agent: CyberAI-Lab-Demo
+Accept: text/html
+
