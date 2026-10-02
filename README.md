@@ -9,7 +9,7 @@ A Python CLI for **AI-assisted cybersecurity research** in authorized labs, CTFs
 > [!IMPORTANT]
 > Only analyze systems, code, logs, or targets you own or have explicit permission to test.
 
-## v0.4 Highlights
+## v0.5 Highlights
 
 - Interactive AI chat
 - OpenAI-compatible API support
@@ -25,8 +25,12 @@ A Python CLI for **AI-assisted cybersecurity research** in authorized labs, CTFs
 - Local CTF/lab workspaces
 - JSON and Markdown report export
 - Contribution guide
-- Module registry architecture with built-in `http` and `recon` analyzers
+- Module registry architecture with built-in `http`, `recon`, `headers`, and `logs` analyzers
 - Installable Python package with a `cyberai` console command
+- Offline response-header review module
+- Offline log-summary module
+- Safe demo inputs for immediate portfolio testing
+- CI validation of package installation and CLI startup
 - Secrets kept outside source code through environment configuration
 
 ## Project Structure
@@ -171,6 +175,8 @@ Run a module against a saved local file:
 ```bash
 cyberai module run http request.txt
 cyberai module run recon recon.txt --output report.md --format md
+cyberai module run headers examples/response-headers.txt
+cyberai module run logs examples/app.log
 ```
 
 The older `cyberai http` and `cyberai recon` commands remain available as compatibility shortcuts.
@@ -199,7 +205,7 @@ Workspaces are local organization helpers; they do not contact or scan targets.
 python -m unittest discover -s tests -v
 ```
 
-GitHub Actions runs the test suite on Python 3.10, 3.11, and 3.12.
+GitHub Actions installs the package, runs the test suite on Python 3.10–3.13, and verifies the CLI entry point.
 
 ## Design Principles
 
