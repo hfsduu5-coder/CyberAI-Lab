@@ -9,7 +9,7 @@ A Python CLI for **AI-assisted cybersecurity research** in authorized labs, CTFs
 > [!IMPORTANT]
 > Only analyze systems, code, logs, or targets you own or have explicit permission to test.
 
-## v0.3 Highlights
+## v0.4 Highlights
 
 - Interactive AI chat
 - OpenAI-compatible API support
@@ -25,6 +25,8 @@ A Python CLI for **AI-assisted cybersecurity research** in authorized labs, CTFs
 - Local CTF/lab workspaces
 - JSON and Markdown report export
 - Contribution guide
+- Module registry architecture with built-in `http` and `recon` analyzers
+- Installable Python package with a `cyberai` console command
 - Secrets kept outside source code through environment configuration
 
 ## Project Structure
@@ -156,6 +158,23 @@ python -m cyberai.cli config
 
 API keys are never printed.
 
+## Modules
+
+List built-in analyzer modules:
+
+```bash
+cyberai module list
+```
+
+Run a module against a saved local file:
+
+```bash
+cyberai module run http request.txt
+cyberai module run recon recon.txt --output report.md --format md
+```
+
+The older `cyberai http` and `cyberai recon` commands remain available as compatibility shortcuts.
+
 ## Workspaces & Report Export
 
 Create an isolated local workspace for a lab or CTF:
@@ -194,7 +213,7 @@ GitHub Actions runs the test suite on Python 3.10, 3.11, and 3.12.
 
 - Structured defensive analysis templates
 - Additional safe local parsers
-- Plugin/module registry
+- Additional analyzer modules and extension points
 - Richer structured report templates
 - Provider adapters
 - Local context/knowledge support
