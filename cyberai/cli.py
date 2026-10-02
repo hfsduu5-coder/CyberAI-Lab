@@ -4,6 +4,8 @@ import json
 from .analyzers import read_text
 from .config import load_settings
 from .dashboard import save_dashboard
+from .doctor import format_checks, run_checks
+from . import __version__
 from .modules import get_module, list_modules
 from .providers import ProviderError, complete
 from .reporting import build_report, save_report
@@ -67,6 +69,7 @@ def add_report_args(p):
 
 def build_parser():
     p=argparse.ArgumentParser(prog="cyberai",description="Extensible AI-assisted CLI for authorized cybersecurity research.")
+    p.add_argument("--version",action="version",version=f"%(prog)s {__version__}")
     sub=p.add_subparsers(dest="command",required=True)
     ask=sub.add_parser("ask")
     ask.add_argument("prompt")
@@ -94,6 +97,7 @@ def build_parser():
     dash.add_argument("--output",default="cyberai-dashboard.html")
     sub.add_parser("chat")
     sub.add_parser("config")
+    sub.add_parser("doctor")
     return p
 
 def main():
@@ -123,6 +127,10 @@ def main():
             return 0
         if a.command=="chat":
             return run_chat()
+        if a.command=="doctor":
+            checks,ok=run_checks()
+            print(format_checks(checks))
+            return 0 if ok else 1
         if a.command=="config":
             s=load_settings()
             print(f"provider: {s.provider}\nmodel: {s.model}\nbase_url: {s.base_url}\ntimeout: {s.timeout}\napi_key_configured: {'yes' if s.api_key else 'no'}")
