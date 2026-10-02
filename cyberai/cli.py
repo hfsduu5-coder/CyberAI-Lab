@@ -3,6 +3,7 @@ from __future__ import annotations
 import argparse
 from pathlib import Path
 
+from .analyzers import http_report, read_text, recon_report
 from .config import load_settings
 from .providers import ProviderError, complete
 
@@ -21,20 +22,44 @@ def run_ask(prompt: str) -> int:
 
 
 def run_analyze(path: str) -> int:
-    file_path = Path(path)
-    if not file_path.is_file():
-        raise ValueError(f"File not found: {file_path}")
-
-    text = file_path.read_text(encoding="utf-8", errors="replace")
-    if not text.strip():
-        raise ValueError("The input file is empty.")
-
+    text = read_text(path)
     prompt = (
         "Analyze the following text as authorized cybersecurity research material. "
         "Summarize what is directly supported by the evidence, identify notable "
         "security observations, separate facts from hypotheses, and suggest safe "
         "next validation steps.\n\n"
         f"--- INPUT ---\n{text}"
+    )
+    return run_ask(prompt)
+
+
+def run_http(path: str, ai: bool) -> int:
+    raw = read_text(path)
+    report = http_report(raw)
+    if not ai:
+        print(report)
+        return 0
+    prompt = (
+        "Review this HTTP request metadata from an authorized lab. Explain the "
+        "request structure, identify security-relevant observations supported by "
+        "the metadata, and suggest safe validation questions. Do not invent a "
+        "vulnerability.\n\n"
+        f"{report}"
+    )
+    return run_ask(prompt)
+
+
+def run_recon(path: str, ai: bool) -> int:
+    text = read_text(path)
+    report = recon_report(text)
+    if not ai:
+        print(report)
+        return 0
+    prompt = (
+        "Review this offline summary of user-supplied reconnaissance output. "
+        "Prioritize observations, distinguish evidence from hypotheses, and suggest "
+        "authorized next validation steps.\n\n"
+        f"{report}"
     )
     return run_ask(prompt)
 
@@ -96,8 +121,16 @@ def build_parser() -> argparse.ArgumentParser:
     ask = sub.add_parser("ask", help="Send a single prompt.")
     ask.add_argument("prompt")
 
-    analyze = sub.add_parser("analyze", help="Analyze a local UTF-8 text file.")
+    analyze = sub.add_parser("analyze", help="Analyze a local UTF-8 text file with AI.")
     analyze.add_argument("path")
+
+    http = sub.add_parser("http", help="Parse an HTTP request file offline.")
+    http.add_argument("path")
+    http.add_argument("--ai", action="store_true", help="Send parsed metadata to the configured AI provider.")
+
+    recon = sub.add_parser("recon", help="Summarize saved reconnaissance output offline.")
+    recon.add_argument("path")
+    recon.add_argument("--ai", action="store_true", help="Send the offline summary to the configured AI provider.")
 
     sub.add_parser("chat", help="Start an interactive chat.")
     sub.add_parser("config", help="Show non-secret configuration.")
@@ -113,6 +146,10 @@ def main() -> int:
             return run_ask(args.prompt)
         if args.command == "analyze":
             return run_analyze(args.path)
+        if args.command == "http":
+            return run_http(args.path, args.ai)
+        if args.command == "recon":
+            return run_recon(args.path, args.ai)
         if args.command == "chat":
             return run_chat()
         if args.command == "config":
