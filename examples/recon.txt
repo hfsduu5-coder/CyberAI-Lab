@@ -1,0 +1,4 @@
+https://lab.example/ [200]
+https://lab.example/login [200]
+https://lab.example/admin [403]
+192.0.2.10
