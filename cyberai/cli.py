@@ -3,6 +3,7 @@ import argparse
 import json
 from .analyzers import read_text
 from .config import load_settings
+from .dashboard import save_dashboard
 from .modules import get_module, list_modules
 from .providers import ProviderError, complete
 from .reporting import build_report, save_report
@@ -88,6 +89,9 @@ def build_parser():
     new.add_argument("--root",default="workspaces")
     status=ws.add_parser("status")
     status.add_argument("path")
+    dash=sub.add_parser("dashboard")
+    dash.add_argument("--root",default="workspaces")
+    dash.add_argument("--output",default="cyberai-dashboard.html")
     sub.add_parser("chat")
     sub.add_parser("config")
     return p
@@ -113,6 +117,9 @@ def main():
             return 0
         if a.command=="workspace" and a.workspace_command=="status":
             print(json.dumps(workspace_status(a.path),indent=2))
+            return 0
+        if a.command=="dashboard":
+            print(f"Dashboard saved: {save_dashboard(a.output,a.root)}")
             return 0
         if a.command=="chat":
             return run_chat()
