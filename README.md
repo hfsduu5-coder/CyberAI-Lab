@@ -1,37 +1,45 @@
 # CyberAI-Lab
 
-A lightweight Python CLI for experimenting with AI-assisted cybersecurity workflows in **authorized labs, CTFs, education, and security research**.
+A Python CLI for **AI-assisted cybersecurity research** in authorized labs, CTFs, education, and defensive security workflows.
+
+![Python](https://img.shields.io/badge/Python-3.10%2B-3776AB?logo=python&logoColor=white)
+![License](https://img.shields.io/badge/License-MIT-800020)
+![Tests](https://img.shields.io/github/actions/workflow/status/hfsduu5-coder/CyberAI-Lab/tests.yml?label=tests)
 
 > [!IMPORTANT]
-> CyberAI-Lab is an educational/research project. Only analyze systems, code, logs, or targets you own or have explicit permission to test.
+> Only analyze systems, code, logs, or targets you own or have explicit permission to test.
 
-## Why this project?
+## v0.2 Highlights
 
-Security work often involves repetitive analysis: reviewing HTTP traffic, understanding findings, summarizing reconnaissance output, and turning raw notes into clear next steps. CyberAI-Lab provides a small provider-agnostic CLI foundation for those workflows without hard-coding credentials into the project.
-
-## Features
-
-- Interactive terminal chat
+- Interactive AI chat
 - OpenAI-compatible API support
 - Local Ollama support
-- Configurable model, endpoint, timeout, and system prompt
-- Analyze local text files from the command line
-- No API keys stored in source code
-- Minimal dependencies and simple architecture
-- Designed for extension with defensive/security research workflows
+- Generic text analysis
+- **Offline HTTP request parser**
+- **Offline reconnaissance-output summarizer**
+- Optional AI interpretation of locally parsed results
+- Input-size guard for local files
+- Unit tests
+- GitHub Actions test matrix for Python 3.10–3.12
+- Dedicated security policy
+- Secrets kept outside source code through environment configuration
 
 ## Project Structure
 
 ```text
 CyberAI-Lab/
+├── .github/workflows/tests.yml
 ├── cyberai/
 │   ├── __init__.py
+│   ├── analyzers.py
 │   ├── cli.py
 │   ├── config.py
 │   └── providers.py
+├── tests/test_analyzers.py
 ├── .env.example
 ├── .gitignore
 ├── LICENSE
+├── SECURITY.md
 ├── requirements.txt
 └── README.md
 ```
@@ -58,27 +66,16 @@ Windows PowerShell:
 .\.venv\Scripts\Activate.ps1
 ```
 
-Install dependencies:
+Then:
 
 ```bash
 pip install -r requirements.txt
-```
-
-Copy the example environment file:
-
-```bash
 cp .env.example .env
 ```
 
-Windows:
+## Provider Configuration
 
-```powershell
-Copy-Item .env.example .env
-```
-
-## Providers
-
-### Ollama (local)
+### Ollama
 
 ```env
 CYBERAI_PROVIDER=ollama
@@ -95,47 +92,95 @@ CYBERAI_API_KEY=your_key_here
 CYBERAI_BASE_URL=https://api.openai.com/v1
 ```
 
-The CLI uses the standard OpenAI-compatible `/chat/completions` interface.
+Never commit a real API key.
 
-## Usage
+## Commands
 
-Interactive mode:
+### Interactive chat
 
 ```bash
 python -m cyberai.cli chat
 ```
 
-Single prompt:
+### Single AI prompt
 
 ```bash
-python -m cyberai.cli ask "Explain the security impact of this finding"
+python -m cyberai.cli ask "Explain the difference between authentication and authorization"
 ```
 
-Analyze a local text file:
+### Analyze a text file with AI
 
 ```bash
 python -m cyberai.cli analyze ./notes.txt
 ```
 
-Show non-secret configuration:
+### Parse an HTTP request offline
+
+Save an authorized/lab request to `request.txt`, then:
+
+```bash
+python -m cyberai.cli http request.txt
+```
+
+The parser reports request metadata such as method, host, path, parameter names, headers, content type, and body size. It does not contact the target.
+
+Optionally send only the parsed report to your configured AI provider:
+
+```bash
+python -m cyberai.cli http request.txt --ai
+```
+
+### Summarize saved recon output offline
+
+```bash
+python -m cyberai.cli recon recon.txt
+```
+
+This extracts a small local summary from supplied text and **does not perform scanning**.
+
+Optional AI review:
+
+```bash
+python -m cyberai.cli recon recon.txt --ai
+```
+
+### Show configuration
 
 ```bash
 python -m cyberai.cli config
 ```
 
+API keys are never printed.
+
+## Tests
+
+```bash
+python -m unittest discover -s tests -v
+```
+
+GitHub Actions runs the test suite on Python 3.10, 3.11, and 3.12.
+
+## Design Principles
+
+1. **Authorization first** — designed for owned, lab, CTF, educational, and explicitly scoped environments.
+2. **Evidence before claims** — analysis prompts distinguish observed facts from hypotheses.
+3. **Local parsing first** — HTTP/recon parsers work offline; AI use is optional.
+4. **Secrets stay out of Git** — credentials belong in local environment configuration.
+5. **Small, auditable core** — keep the code understandable while the project grows.
+
 ## Roadmap
 
-- Structured security-analysis templates
-- Safer parsing of reconnaissance output
-- Report-generation workflows
-- Additional provider adapters
-- Optional local knowledge/context support
-- Tests and CI
+- Structured defensive analysis templates
+- Additional safe local parsers
+- Report export
+- Provider adapters
+- Local context/knowledge support
+- Expanded tests and packaging
 
 ## Security
 
-Never commit `.env`, API keys, tokens, credentials, private target data, or confidential assessment output.
+See [SECURITY.md](SECURITY.md). Never commit `.env`, credentials, tokens, private assessment data, or confidential target information.
 
 ## License
 
-MIT License.
+MIT.
