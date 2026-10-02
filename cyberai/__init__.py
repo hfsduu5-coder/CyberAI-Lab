@@ -1,3 +1,3 @@
-"""CyberAI-Lab: AI-assisted cybersecurity research CLI."""
+"""CyberAI-Lab package."""
 
-__version__ = "0.3.0"
+__version__ = "0.4.0"
