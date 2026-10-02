@@ -9,7 +9,7 @@ A Python CLI for **AI-assisted cybersecurity research** in authorized labs, CTFs
 > [!IMPORTANT]
 > Only analyze systems, code, logs, or targets you own or have explicit permission to test.
 
-## v0.6 Highlights
+## v0.7 Highlights
 
 - Interactive AI chat
 - OpenAI-compatible API support
@@ -31,6 +31,8 @@ A Python CLI for **AI-assisted cybersecurity research** in authorized labs, CTFs
 - Offline log-summary module
 - Safe demo inputs for immediate portfolio testing
 - CI validation of package installation and CLI startup
+- Read-only local HTML dashboard for workspaces and installed modules
+- Dashboard works without a web server or extra dependency
 - Secrets kept outside source code through environment configuration
 
 ## Project Structure
@@ -181,6 +183,22 @@ cyberai module run headers examples/response-headers.txt --output report.html --
 ```
 
 The older `cyberai http` and `cyberai recon` commands remain available as compatibility shortcuts.
+
+## Local Dashboard
+
+Generate a read-only dashboard from your local workspaces:
+
+```bash
+cyberai dashboard
+```
+
+Or choose the workspace root and output file:
+
+```bash
+cyberai dashboard --root workspaces --output cyberai-dashboard.html
+```
+
+Open the generated HTML file in your browser. The dashboard is static and local: it does not start a server, scan targets, or upload workspace data.
 
 ## Workspaces & Report Export
 
