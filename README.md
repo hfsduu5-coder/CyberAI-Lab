@@ -9,7 +9,7 @@ A Python CLI for **AI-assisted cybersecurity research** in authorized labs, CTFs
 > [!IMPORTANT]
 > Only analyze systems, code, logs, or targets you own or have explicit permission to test.
 
-## v0.5 Highlights
+## v0.6 Highlights
 
 - Interactive AI chat
 - OpenAI-compatible API support
@@ -23,7 +23,7 @@ A Python CLI for **AI-assisted cybersecurity research** in authorized labs, CTFs
 - GitHub Actions test matrix for Python 3.10–3.12
 - Dedicated security policy
 - Local CTF/lab workspaces
-- JSON and Markdown report export
+- JSON, Markdown, and standalone HTML report export
 - Contribution guide
 - Module registry architecture with built-in `http`, `recon`, `headers`, and `logs` analyzers
 - Installable Python package with a `cyberai` console command
@@ -177,6 +177,7 @@ cyberai module run http request.txt
 cyberai module run recon recon.txt --output report.md --format md
 cyberai module run headers examples/response-headers.txt
 cyberai module run logs examples/app.log
+cyberai module run headers examples/response-headers.txt --output report.html --format html
 ```
 
 The older `cyberai http` and `cyberai recon` commands remain available as compatibility shortcuts.
@@ -190,11 +191,12 @@ python -m cyberai.cli workspace new demo-lab
 python -m cyberai.cli workspace status workspaces/demo-lab
 ```
 
-Export offline parser results as JSON or Markdown:
+Export offline parser results as JSON, Markdown, or a portable HTML report:
 
 ```bash
 python -m cyberai.cli http request.txt --output workspaces/demo-lab/reports/http.json --format json
 python -m cyberai.cli recon recon.txt --output workspaces/demo-lab/reports/recon.md --format md
+cyberai module run headers examples/response-headers.txt --output workspaces/demo-lab/reports/headers.html --format html
 ```
 
 Workspaces are local organization helpers; they do not contact or scan targets.
