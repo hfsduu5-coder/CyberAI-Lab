@@ -1,5 +1,15 @@
 # CyberAI-Lab
 
+## 👤 Developer & CyberIQ
+
+**مقتدى الصدر جارالله خليف — Muqtada Al-Sadr Jarallah Khalif**  
+**الحنتوشي — Al-Hantooshi**  
+Developer • Team Leader & CEO of **CyberIQ**
+
+CyberIQ focuses on cybersecurity, AI, networking, programming, CTF training, workshops, student projects, and practical labs.
+
+---
+
 A Python CLI for **AI-assisted cybersecurity research** in authorized labs, CTFs, education, and defensive security workflows.
 
 ![Python](https://img.shields.io/badge/Python-3.10%2B-3776AB?logo=python&logoColor=white)
