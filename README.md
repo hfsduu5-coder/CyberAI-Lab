@@ -9,7 +9,7 @@ A Python CLI for **AI-assisted cybersecurity research** in authorized labs, CTFs
 > [!IMPORTANT]
 > Only analyze systems, code, logs, or targets you own or have explicit permission to test.
 
-## v0.7 Highlights
+## v0.8 Highlights
 
 - Interactive AI chat
 - OpenAI-compatible API support
@@ -33,6 +33,9 @@ A Python CLI for **AI-assisted cybersecurity research** in authorized labs, CTFs
 - CI validation of package installation and CLI startup
 - Read-only local HTML dashboard for workspaces and installed modules
 - Dashboard works without a web server or extra dependency
+- `cyberai doctor` local configuration diagnostics
+- `cyberai --version` support
+- End-to-end offline demo workflow in `examples/demo.py`
 - Secrets kept outside source code through environment configuration
 
 ## Project Structure
@@ -183,6 +186,25 @@ cyberai module run headers examples/response-headers.txt --output report.html --
 ```
 
 The older `cyberai http` and `cyberai recon` commands remain available as compatibility shortcuts.
+
+## Quick Health Check
+
+```bash
+cyberai --version
+cyberai doctor
+```
+
+The doctor checks Python compatibility, local configuration, registered modules, and project setup without probing external targets.
+
+## End-to-End Demo
+
+After `pip install -e .`, run:
+
+```bash
+python examples/demo.py
+```
+
+The demo exercises the CLI, offline analyzers, report generation, and dashboard using the repository's safe example data.
 
 ## Local Dashboard
 
