@@ -6,7 +6,7 @@
 
 **مقتدى الصدر جارالله خليف — Muqtada Al-Sadr Jarallah Khalif**  
 **الحنتوشي — Al-Hantooshi**  
-**Developer • Team Leader • CEO of CyberIQ**
+**Developer • Team Leader of CyberIQ**
 
 CyberIQ focuses on cybersecurity, AI, networking, programming, CTF training, workshops, student projects, and practical labs.
 
