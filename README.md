@@ -1,11 +1,13 @@
-<p align="center"><img src="assets/cyberiq-logo.svg" width="86" alt="CyberIQ logo">&nbsp;&nbsp;<strong>CyberIQ</strong></p>
-
 # CyberAI-Lab
 
 > **Personal cybersecurity project & portfolio work by Muqtada Al-Sadr Jarallah Khalif (Al-Hantooshi)**  
 > Developer • Team Leader of CyberIQ
 
 **Project mission:** combine local, auditable defensive analysis with optional AI assistance for authorized labs, CTF learning, and security research.
+
+## Project Status
+
+This repository is maintained as part of my public cybersecurity and software-engineering portfolio. Development focuses on clear documentation, reproducible local workflows, defensive/educational use, and evidence-backed claims. CyberIQ branding uses the official team identity only when the official asset is available; placeholder logo artwork is not presented as official.
 
 ## 👤 Developer & CyberIQ Leadership
 
