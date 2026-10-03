@@ -10,6 +10,11 @@ class AnalyzerTests(unittest.TestCase):
         self.assertEqual(result["query_parameter_names"],["next"])
         self.assertEqual(result["content_type"],"application/json")
 
+    def test_http_duplicate_headers_are_reported(self):
+        result=parse_http_request("GET /?tag=a&tag=b&empty= HTTP/1.1\nHost: lab.test\nX-Test: one\nX-Test: two\n\n")
+        self.assertEqual(result["query_parameter_names"],["empty","tag"])
+        self.assertEqual(result["duplicate_header_names"],["X-Test"])
+
     def test_http_report(self):
         self.assertIn('"host": "lab.test"',http_report("GET / HTTP/1.1\nHost: lab.test\n\n"))
 
@@ -31,6 +36,11 @@ class AnalyzerTests(unittest.TestCase):
         self.assertEqual(result["ipv4_values"],1)
         self.assertEqual(result["domain_like_values"],1)
         self.assertEqual(result["sha256_like_values"],1)
+
+    def test_log_invalid_ipv4_is_excluded(self):
+        from cyberai.analyzers import log_summary
+        result=log_summary("INFO client=192.0.2.10 bad=999.999.999.999")
+        self.assertEqual(result["unique_ipv4_values"],1)
 
     def test_invalid_ipv4_is_excluded(self):
         result=indicators_summary("valid=192.0.2.10 invalid=999.999.999.999")
