@@ -94,6 +94,13 @@ def url_inventory(text: str) -> dict:
         "note":"Offline inventory of supplied URLs only; no hosts are contacted."
     }
 
+def _valid_domain(value: str) -> bool:
+    value=value.rstrip(".").lower()
+    if len(value)>253 or "." not in value: return False
+    labels=value.split(".")
+    if len(labels[-1])<2 or not labels[-1].isalpha(): return False
+    return all(1<=len(label)<=63 and not label.startswith("-") and not label.endswith("-") and all(ch.isalnum() or ch=="-" for ch in label) for label in labels)
+
 def _valid_ipv4(value: str) -> bool:
     try:
         return ipaddress.ip_address(value).version == 4
