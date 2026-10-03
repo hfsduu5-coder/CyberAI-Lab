@@ -2,6 +2,11 @@
 
 # CyberAI-Lab
 
+> **Personal cybersecurity project & portfolio work by Muqtada Al-Sadr Jarallah Khalif (Al-Hantooshi)**  
+> Developer • Team Leader of CyberIQ
+
+**Project mission:** combine local, auditable defensive analysis with optional AI assistance for authorized labs, CTF learning, and security research.
+
 ## 👤 Developer & CyberIQ Leadership
 
 **مقتدى الصدر جارالله خليف — Muqtada Al-Sadr Jarallah Khalif**  
@@ -32,6 +37,12 @@ CyberAI-Lab
 ├─ Dashboard        → Local read-only HTML
 └─ Diagnostics      → cyberai doctor
 ```
+
+## Architecture at a glance
+
+**Saved evidence → offline analyzers → structured result → JSON/Markdown/HTML report → optional AI interpretation**
+
+The core is intentionally local-first: HTTP, recon text, headers, logs, URLs, and indicator patterns can be processed without contacting a target.
 
 ## v1.0 Stable Release
 
@@ -301,6 +312,10 @@ v1.0 establishes the stable CLI, module, workspace, reporting, dashboard, diagno
 ## Security
 
 See [SECURITY.md](SECURITY.md). Never commit `.env`, credentials, tokens, private assessment data, or confidential target information.
+
+## Portfolio & attribution
+
+This repository documents my personal development work on CyberAI-Lab. External models, libraries, standards, and learning resources remain the work of their respective authors and are not presented as my own.
 
 ## License
 
