@@ -1,3 +1,5 @@
+<p align="center"><img src="assets/cyberiq-logo.svg" width="86" alt="CyberIQ logo">&nbsp;&nbsp;<strong>CyberIQ</strong></p>
+
 # CyberAI-Lab
 
 ## 👤 Developer & CyberIQ
