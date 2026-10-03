@@ -35,4 +35,6 @@ cyberai = "cyberai.cli:main"
 
 [tool.setuptools.packages.find]
 include = ["cyberai*"]
-\n[project.optional-dependencies]\ndev = []\n
+
+[project.optional-dependencies]
+dev = []
