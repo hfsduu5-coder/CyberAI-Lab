@@ -21,6 +21,18 @@ A Python CLI for **AI-assisted cybersecurity research** in authorized labs, CTFs
 > [!IMPORTANT]
 > Only analyze systems, code, logs, or targets you own or have explicit permission to test.
 
+## 📸 Preview
+
+```text
+CyberAI-Lab
+├─ AI Providers     → Ollama / OpenAI-compatible
+├─ Analyzer Modules → HTTP / Recon / Headers / Logs
+├─ Workspaces       → Inputs / Reports / Notes
+├─ Reporting        → JSON / Markdown / HTML
+├─ Dashboard        → Local read-only HTML
+└─ Diagnostics      → cyberai doctor
+```
+
 ## v0.8 Highlights
 
 - Interactive AI chat
