@@ -46,7 +46,7 @@ CyberAI-Lab
 
 The core is intentionally local-first: HTTP, recon text, headers, logs, URLs, and indicator patterns can be processed without contacting a target.
 
-## v1.0 Stable Release
+## v1.1 Code Milestone
 
 - Interactive AI chat
 - OpenAI-compatible API support
@@ -301,7 +301,7 @@ GitHub Actions installs the package, runs the test suite on Python 3.10–3.13, 
 
 ## Roadmap
 
-v1.0 establishes the stable CLI, module, workspace, reporting, dashboard, diagnostics, and testing foundation.
+v1.1 is the current code milestone for the CLI, module, workspace, reporting, dashboard, diagnostics, parser-hardening, and testing foundation. A GitHub tag/release is only considered published when it exists in GitHub Releases.
 
 - Structured defensive analysis templates
 - Additional safe local parsers
