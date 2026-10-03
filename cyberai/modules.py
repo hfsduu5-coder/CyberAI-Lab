@@ -1,7 +1,7 @@
 from __future__ import annotations
 from dataclasses import dataclass
 from typing import Any, Callable
-from .analyzers import headers_report, log_summary, parse_http_request, recon_report
+from .analyzers import headers_report, indicators_summary, log_summary, parse_http_request, recon_report, url_inventory
 
 Analyzer=Callable[[str],Any]
 @dataclass(frozen=True)
@@ -27,3 +27,6 @@ register(Module("http","Parse a saved HTTP request offline.",parse_http_request,
 register(Module("recon","Summarize saved reconnaissance output offline.",recon_report,"Review this offline recon summary. Separate evidence from hypotheses."))
 register(Module("headers","Review saved HTTP response headers offline.",headers_report,"Review these saved response-header observations defensively. Missing headers are signals, not proof of a vulnerability."))
 register(Module("logs","Summarize saved application/security logs offline.",log_summary,"Review this offline log summary. Highlight supported observations and defensive follow-up questions."))
+
+register(Module("urls","Inventory URLs from supplied text offline.",url_inventory,"Review this offline URL inventory defensively. Do not infer maliciousness without evidence."))
+register(Module("indicators","Count common indicator-like patterns in supplied text offline.",indicators_summary,"Review these pattern counts defensively. Do not label indicators malicious without supporting evidence."))
