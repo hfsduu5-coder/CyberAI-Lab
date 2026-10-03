@@ -1,8 +1,12 @@
+## 1.0.1
+- Validate IPv4 observations before counting them in offline analyzers.
+- Added regression coverage for malformed IPv4-like values.
+
 # Changelog
 
 All notable changes to CyberAI-Lab are documented here.
 
-## [1.0.0] - 2026-10-03
+## [1.0.1] - 2026-10-03
 
 First stable portfolio release.
 
