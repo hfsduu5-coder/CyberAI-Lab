@@ -14,7 +14,7 @@ CyberIQ focuses on cybersecurity, AI, networking, programming, CTF training, wor
 
 A Python CLI for **AI-assisted cybersecurity research** in authorized labs, CTFs, education, and defensive security workflows.
 
-![Python](https://img.shields.io/badge/Python-3.10%2B-3776AB?logo=python&logoColor=white)
+![Version](https://img.shields.io/badge/version-1.0.0-B00020)\n![Python](https://img.shields.io/badge/Python-3.10%2B-3776AB?logo=python&logoColor=white)
 ![License](https://img.shields.io/badge/License-MIT-800020)
 ![Tests](https://img.shields.io/github/actions/workflow/status/hfsduu5-coder/CyberAI-Lab/tests.yml?label=tests)
 
@@ -33,7 +33,7 @@ CyberAI-Lab
 └─ Diagnostics      → cyberai doctor
 ```
 
-## v0.9 Highlights
+## v1.0 Stable Release
 
 - Interactive AI chat
 - OpenAI-compatible API support
@@ -44,7 +44,7 @@ CyberAI-Lab
 - Optional AI interpretation of locally parsed results
 - Input-size guard for local files
 - Unit tests
-- GitHub Actions test matrix for Python 3.10–3.12
+- GitHub Actions test matrix for Python 3.10–3.13
 - Dedicated security policy
 - Local CTF/lab workspaces
 - JSON, Markdown, and standalone HTML report export
@@ -80,6 +80,7 @@ CyberAI-Lab/
 ├── .gitignore
 ├── LICENSE
 ├── CONTRIBUTING.md
+├── CHANGELOG.md
 ├── SECURITY.md
 ├── requirements.txt
 └── README.md
@@ -286,6 +287,8 @@ GitHub Actions installs the package, runs the test suite on Python 3.10–3.13, 
 5. **Small, auditable core** — keep the code understandable while the project grows.
 
 ## Roadmap
+
+v1.0 establishes the stable CLI, module, workspace, reporting, dashboard, diagnostics, and testing foundation.
 
 - Structured defensive analysis templates
 - Additional safe local parsers
