@@ -6,7 +6,7 @@ build-backend = "setuptools.build_meta"
 name = "cyberai-lab"
 version = "1.1.0"
 description = "Extensible AI-assisted CLI for authorized security education and research."
-readme = "README.md"
+readme = {file = "README.md", content-type = "text/markdown"}
 requires-python = ">=3.10"
 license = "MIT"
 authors = [{name = "Muqtada Al-Sadr Jarallah Khalif"}]
@@ -35,3 +35,4 @@ cyberai = "cyberai.cli:main"
 
 [tool.setuptools.packages.find]
 include = ["cyberai*"]
+\n[project.optional-dependencies]\ndev = []\n
