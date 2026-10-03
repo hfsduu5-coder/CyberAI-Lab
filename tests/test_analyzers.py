@@ -28,9 +28,13 @@ class AnalyzerTests(unittest.TestCase):
     def test_indicator_summary(self):
         text="192.0.2.10 example.org "+"a"*64
         result=indicators_summary(text)
-        self.assertEqual(result["ipv4_like_values"],1)
+        self.assertEqual(result["ipv4_values"],1)
         self.assertEqual(result["domain_like_values"],1)
         self.assertEqual(result["sha256_like_values"],1)
+
+    def test_invalid_ipv4_is_excluded(self):
+        result=indicators_summary("valid=192.0.2.10 invalid=999.999.999.999")
+        self.assertEqual(result["ipv4_values"],1)
 
 if __name__=="__main__":
     unittest.main()
