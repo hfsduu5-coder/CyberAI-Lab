@@ -73,3 +73,35 @@ def log_summary(text: str) -> dict:
     ipv4=set(re.findall(r"(?<![\d.])(?:\d{1,3}\.){3}\d{1,3}(?![\d.])",text))
     return {"lines":len(lines),"level_counts":dict(sorted(levels.items())),"unique_ipv4_like_values":len(ipv4),
             "note":"Offline summary only; values are not validated or contacted."}
+
+def url_inventory(text: str) -> dict:
+    urls=re.findall(r"https?://[^\s\]\[<>'\"]+",text)
+    schemes=Counter(); hosts=Counter(); extensions=Counter()
+    for raw in urls:
+        parsed=urlsplit(raw)
+        if parsed.scheme: schemes[parsed.scheme.lower()]+=1
+        if parsed.hostname: hosts[parsed.hostname.lower()]+=1
+        suffix=Path(parsed.path).suffix.lower()
+        if suffix and len(suffix)<=10: extensions[suffix]+=1
+    return {
+        "urls_found":len(urls),
+        "unique_hosts":len(hosts),
+        "schemes":dict(sorted(schemes.items())),
+        "top_hosts":dict(hosts.most_common(10)),
+        "file_extensions":dict(extensions.most_common(10)),
+        "note":"Offline inventory of supplied URLs only; no hosts are contacted."
+    }
+
+def indicators_summary(text: str) -> dict:
+    ipv4=set(re.findall(r"(?<![\d.])(?:\d{1,3}\.){3}\d{1,3}(?![\d.])",text))
+    domains=set(re.findall(r"(?<![@\w-])(?:[A-Za-z0-9](?:[A-Za-z0-9-]{0,61}[A-Za-z0-9])?\.)+[A-Za-z]{2,63}(?![\w-])",text))
+    sha256=set(re.findall(r"(?i)(?<![0-9a-f])[0-9a-f]{64}(?![0-9a-f])",text))
+    md5=set(re.findall(r"(?i)(?<![0-9a-f])[0-9a-f]{32}(?![0-9a-f])",text))
+    return {
+        "ipv4_like_values":len(ipv4),
+        "domain_like_values":len(domains),
+        "sha256_like_values":len(sha256),
+        "md5_like_values":len(md5),
+        "note":"Counts are pattern-based observations from supplied text, not threat verdicts or reputation checks."
+    }
+
