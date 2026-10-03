@@ -4,7 +4,7 @@ import re
 import ipaddress
 from collections import Counter
 from pathlib import Path
-from urllib.parse import urlsplit
+from urllib.parse import parse_qsl, urlsplit
 
 def read_text(path: str, max_bytes: int = 1_000_000) -> str:
     p=Path(path)
@@ -20,17 +20,18 @@ def parse_http_request(raw: str) -> dict:
     parts=lines[0].split()
     if len(parts)!=3 or not parts[2].startswith("HTTP/"): raise ValueError("Expected request line: METHOD PATH HTTP/x.x")
     method,target,version=parts
-    headers={}; body_start=len(lines)
+    headers={}; header_names=[]; body_start=len(lines)
     for i,line in enumerate(lines[1:],start=1):
         if line=="": body_start=i+1; break
         if ":" in line:
-            k,v=line.split(":",1); headers[k.strip()]=v.strip()
+            k,v=line.split(":",1); k=k.strip(); header_names.append(k); headers.setdefault(k,[]).append(v.strip())
     body="\n".join(lines[body_start:]); parsed=urlsplit(target)
-    query_keys=sorted({x.split("=",1)[0] for x in parsed.query.split("&") if x})
+    query_keys=sorted({k for k,_ in parse_qsl(parsed.query,keep_blank_values=True)})
     return {"method":method.upper(),"path":parsed.path or "/","version":version,
-        "host":next((v for k,v in headers.items() if k.lower()=="host"),""),
-        "query_parameter_names":query_keys,"header_names":sorted(headers),
-        "content_type":next((v for k,v in headers.items() if k.lower()=="content-type"),""),
+        "host":next((v[0] for k,v in headers.items() if k.lower()=="host" and v),""),
+        "query_parameter_names":query_keys,"header_names":sorted(set(header_names),key=str.lower),
+        "duplicate_header_names":sorted(k for k,v in headers.items() if len(v)>1),
+        "content_type":next((v[0] for k,v in headers.items() if k.lower()=="content-type" and v),""),
         "body_bytes":len(body.encode("utf-8"))}
 
 def http_report(raw: str) -> str:
@@ -93,8 +94,15 @@ def url_inventory(text: str) -> dict:
         "note":"Offline inventory of supplied URLs only; no hosts are contacted."
     }
 
+def _valid_ipv4(value: str) -> bool:
+    try:
+        return ipaddress.ip_address(value).version == 4
+    except ValueError:
+        return False
+
 def indicators_summary(text: str) -> dict:
-    ipv4=set(re.findall(r"(?<![\d.])(?:\d{1,3}\.){3}\d{1,3}(?![\d.])",text))
+    candidates=set(re.findall(r"(?<![\d.])(?:\d{1,3}\.){3}\d{1,3}(?![\d.])",text))
+    ipv4={x for x in candidates if _valid_ipv4(x)}
     domains=set(re.findall(r"(?<![@\w-])(?:[A-Za-z0-9](?:[A-Za-z0-9-]{0,61}[A-Za-z0-9])?\.)+[A-Za-z]{2,63}(?![\w-])",text))
     sha256=set(re.findall(r"(?i)(?<![0-9a-f])[0-9a-f]{64}(?![0-9a-f])",text))
     md5=set(re.findall(r"(?i)(?<![0-9a-f])[0-9a-f]{32}(?![0-9a-f])",text))
