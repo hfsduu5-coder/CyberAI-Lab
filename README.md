@@ -21,7 +21,7 @@ CyberIQ focuses on cybersecurity, AI, networking, programming, CTF training, wor
 
 A Python CLI for **AI-assisted cybersecurity research** in authorized labs, CTFs, education, and defensive security workflows.
 
-![Version](https://img.shields.io/badge/version-1.0.1-B00020)\n![Python](https://img.shields.io/badge/Python-3.10%2B-3776AB?logo=python&logoColor=white)
+![Version](https://img.shields.io/badge/version-1.1.0-B00020)\n![Python](https://img.shields.io/badge/Python-3.10%2B-3776AB?logo=python&logoColor=white)
 ![License](https://img.shields.io/badge/License-MIT-800020)
 ![Tests](https://img.shields.io/github/actions/workflow/status/hfsduu5-coder/CyberAI-Lab/tests.yml?label=tests)
 
