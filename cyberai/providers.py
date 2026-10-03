@@ -8,6 +8,7 @@ from .config import Settings
 
 
 Message = dict[str, str]
+MAX_RESPONSE_BYTES = 2_000_000
 
 
 class ProviderError(RuntimeError):
@@ -18,6 +19,13 @@ def _post(url: str, *, headers: dict[str, str], payload: dict, timeout: int) -> 
     try:
         response = requests.post(url, headers=headers, json=payload, timeout=timeout)
         response.raise_for_status()
+        size_header=response.headers.get("Content-Length")
+        if size_header:
+            try:
+                if int(size_header) > MAX_RESPONSE_BYTES: raise ProviderError("Provider response exceeds safety limit.")
+            except ValueError:
+                pass
+        if len(response.content) > MAX_RESPONSE_BYTES: raise ProviderError("Provider response exceeds safety limit.")
         return response.json()
     except requests.RequestException as exc:
         raise ProviderError(f"Provider request failed: {exc}") from exc
