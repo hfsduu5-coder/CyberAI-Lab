@@ -2,6 +2,7 @@ from __future__ import annotations
 
 import os
 from dataclasses import dataclass
+from urllib.parse import urlparse
 
 from dotenv import load_dotenv
 
@@ -46,8 +47,11 @@ def load_settings() -> Settings:
     except ValueError as exc:
         raise ValueError("CYBERAI_TIMEOUT must be an integer.") from exc
 
-    if timeout <= 0:
-        raise ValueError("CYBERAI_TIMEOUT must be greater than zero.")
+    if timeout < 1 or timeout > 300:
+        raise ValueError("CYBERAI_TIMEOUT must be between 1 and 300 seconds.")
+    parsed = urlparse(base_url)
+    if parsed.scheme not in {"http", "https"} or not parsed.netloc:
+        raise ValueError("CYBERAI_BASE_URL must be an absolute http(s) URL.")
     if not model:
         raise ValueError("CYBERAI_MODEL cannot be empty.")
     if provider == "openai" and not api_key:
