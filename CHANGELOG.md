@@ -8,7 +8,7 @@ All notable changes to CyberAI-Lab are documented here.
 
 ## [1.1.0] - 2026-10-03
 
-First stable portfolio release.
+Code milestone for the public portfolio; this changelog entry does not by itself imply a published GitHub tag or Release.
 
 ### Added
 - Modular offline analyzers for HTTP requests, reconnaissance text, response headers, logs, URLs, and indicator-like patterns.
