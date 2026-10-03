@@ -1,6 +1,7 @@
 from __future__ import annotations
 import json
 import re
+import ipaddress
 from collections import Counter
 from pathlib import Path
 from urllib.parse import urlsplit
@@ -71,8 +72,8 @@ def log_summary(text: str) -> dict:
             if re.search(rf"\b{level}\b",line,re.I):
                 levels[level.upper()]+=1; break
     ipv4=set(re.findall(r"(?<![\d.])(?:\d{1,3}\.){3}\d{1,3}(?![\d.])",text))
-    return {"lines":len(lines),"level_counts":dict(sorted(levels.items())),"unique_ipv4_like_values":len(ipv4),
-            "note":"Offline summary only; values are not validated or contacted."}
+    return {"lines":len(lines),"level_counts":dict(sorted(levels.items())),"unique_ipv4_values":len(ipv4),
+            "note":"Offline summary only; IPv4 values are syntax-validated and never contacted."}
 
 def url_inventory(text: str) -> dict:
     urls=re.findall(r"https?://[^\s\]\[<>'\"]+",text)
@@ -98,7 +99,7 @@ def indicators_summary(text: str) -> dict:
     sha256=set(re.findall(r"(?i)(?<![0-9a-f])[0-9a-f]{64}(?![0-9a-f])",text))
     md5=set(re.findall(r"(?i)(?<![0-9a-f])[0-9a-f]{32}(?![0-9a-f])",text))
     return {
-        "ipv4_like_values":len(ipv4),
+        "ipv4_values":len(ipv4),
         "domain_like_values":len(domains),
         "sha256_like_values":len(sha256),
         "md5_like_values":len(md5),
