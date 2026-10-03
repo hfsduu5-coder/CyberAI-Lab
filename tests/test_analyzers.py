@@ -30,6 +30,11 @@ class AnalyzerTests(unittest.TestCase):
         self.assertEqual(result["unique_hosts"],1)
         self.assertEqual(result["file_extensions"][".js"],1)
 
+    def test_url_inventory_normalizes_trailing_punctuation(self):
+        result=url_inventory("See https://example.test/a.js, and https://example.test/b.css).")
+        self.assertEqual(result["urls_found"],2)
+        self.assertEqual(result["unique_hosts"],1)
+
     def test_indicator_summary(self):
         text="192.0.2.10 example.org "+"a"*64
         result=indicators_summary(text)
