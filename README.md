@@ -26,14 +26,14 @@ A Python CLI for **AI-assisted cybersecurity research** in authorized labs, CTFs
 ```text
 CyberAI-Lab
 ├─ AI Providers     → Ollama / OpenAI-compatible
-├─ Analyzer Modules → HTTP / Recon / Headers / Logs
+├─ Analyzer Modules → HTTP / Recon / Headers / Logs / URLs / Indicators
 ├─ Workspaces       → Inputs / Reports / Notes
 ├─ Reporting        → JSON / Markdown / HTML
 ├─ Dashboard        → Local read-only HTML
 └─ Diagnostics      → cyberai doctor
 ```
 
-## v0.8 Highlights
+## v0.9 Highlights
 
 - Interactive AI chat
 - OpenAI-compatible API support
@@ -53,6 +53,8 @@ CyberAI-Lab
 - Installable Python package with a `cyberai` console command
 - Offline response-header review module
 - Offline log-summary module
+- Offline URL inventory module
+- Offline indicator-pattern summary (IPv4/domain/hash-like counts; no reputation lookup)
 - Safe demo inputs for immediate portfolio testing
 - CI validation of package installation and CLI startup
 - Read-only local HTML dashboard for workspaces and installed modules
@@ -206,6 +208,8 @@ cyberai module run http request.txt
 cyberai module run recon recon.txt --output report.md --format md
 cyberai module run headers examples/response-headers.txt
 cyberai module run logs examples/app.log
+cyberai module run urls examples/recon.txt
+cyberai module run indicators examples/recon.txt
 cyberai module run headers examples/response-headers.txt --output report.html --format html
 ```
 
