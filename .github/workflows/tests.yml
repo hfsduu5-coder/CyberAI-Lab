@@ -27,3 +27,5 @@ jobs:
       - run: cyberai --version
       - run: cyberai doctor
       - run: python examples/demo.py
+
+# CI_EVIDENCE: 1970-01-01 manual-verification trigger marker
