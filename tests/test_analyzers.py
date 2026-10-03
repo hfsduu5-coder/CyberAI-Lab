@@ -35,6 +35,10 @@ class AnalyzerTests(unittest.TestCase):
         self.assertEqual(result["urls_found"],2)
         self.assertEqual(result["unique_hosts"],1)
 
+    def test_domain_validation(self):
+        result=indicators_summary("valid=example.org bad=-broken.example.org bad2=example.1x")
+        self.assertEqual(result["domain_like_values"],1)
+
     def test_indicator_summary(self):
         text="192.0.2.10 example.org "+"a"*64
         result=indicators_summary(text)
