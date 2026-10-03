@@ -6,7 +6,8 @@ from pathlib import Path
 from typing import Any
 
 def build_report(kind: str, source: str, data: Any) -> dict:
-    return {"schema_version":2,"generated_at":datetime.now(timezone.utc).isoformat(),"kind":kind,"source":source,"data":data}
+    if not str(kind).strip(): raise ValueError("Report kind is required.")
+    return {"schema_version":2,"generated_at":datetime.now(timezone.utc).isoformat(),"kind":str(kind).strip(),"source":Path(str(source)).name if source else "","data":data}
 
 def _markdown(report: dict) -> str:
     data=report.get("data","")
@@ -34,7 +35,9 @@ def _html(report: dict) -> str:
 <h2>Results</h2><pre>{html.escape(rendered)}</pre></div></body></html>"""
 
 def save_report(report: dict, output: str, fmt: str) -> Path:
-    path=Path(output); path.parent.mkdir(parents=True,exist_ok=True)
+    path=Path(output)
+    if path.exists() and path.is_dir(): raise ValueError("Report output must be a file path.")
+    path.parent.mkdir(parents=True,exist_ok=True)
     if fmt=="json": content=json.dumps(report,indent=2,ensure_ascii=False)
     elif fmt=="md": content=_markdown(report)
     elif fmt=="html": content=_html(report)
